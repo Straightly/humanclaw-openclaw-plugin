@@ -1,10 +1,16 @@
 {
-  "name": "humanclaw-openclaw-plugin",
+  "name": "humanclaw-plugin",
   "version": "0.1.0",
   "description": "Human-in-the-loop manual provider for OpenClaw",
   "type": "module",
   "private": false,
   "openclaw": {
-    "extensions": ["./src/index.ts"]
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "dependencies": {
+    "@mariozechner/pi-ai": "0.61.1",
+    "@mariozechner/pi-agent-core": "0.61.1"
   }
 }

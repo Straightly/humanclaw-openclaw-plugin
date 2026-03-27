@@ -4,7 +4,7 @@ import { createAssistantMessageEventStream } from "@mariozechner/pi-ai";
 import type { StreamFn } from "@mariozechner/pi-agent-core";
 
 const PROVIDER_ID = "humanclaw";
-const MODEL_ID = "humanclaw/manual";
+const MODEL_ID = "manual";
 const SENTINEL = "<<<END>>>";
 
 function estimateTokens(text: string): number {
@@ -177,6 +177,14 @@ export default definePluginEntry({
       label: "HumanClaw (manual)",
       docsPath: "/plugins/humanclaw",
       auth: [],
+      augmentModelCatalog: () => [
+        {
+          id: MODEL_ID,
+          name: "Manual (Human-in-the-loop)",
+          provider: PROVIDER_ID,
+          input: ["text"],
+        },
+      ],
       catalog: {
         order: "simple",
         run: async () => ({
