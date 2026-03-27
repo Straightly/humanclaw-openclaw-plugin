@@ -108,16 +108,15 @@ function createManualStreamFn(): StreamFn {
       try {
         const promptText = buildManualPrompt(context ?? {});
         const header =
-          "\n=== HumanClaw Manual Mode ===\n" +
-          "Copy the prompt below into any chatbot.\n" +
-          `Paste the response here and end with ${SENTINEL}.\n\n`;
+          "\n=====HumanClaw Manual Mode, Prompt: =====\n";
 
         process.stdout.write(header);
         if (promptText.length > 0) {
-          process.stdout.write(promptText + "\n\n");
+          process.stdout.write(promptText + "\n");
         } else {
-          process.stdout.write("(empty prompt)\n\n");
+          process.stdout.write("(empty prompt)\n");
         }
+        process.stdout.write("=====Please type or paste response here, end with <<<END>>> on a new seperated line to end the response.  Waiting...\n");
 
         const responseText = await readManualResponse(options?.signal);
         const inputTokens = estimateTokens(promptText);
