@@ -1,0 +1,10 @@
+{
+  "name": "humanclaw-openclaw-plugin",
+  "version": "0.1.0",
+  "description": "Human-in-the-loop manual provider for OpenClaw",
+  "type": "module",
+  "private": false,
+  "openclaw": {
+    "extensions": ["./src/index.ts"]
+  }
+}
