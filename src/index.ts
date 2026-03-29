@@ -1,11 +1,10 @@
-import { createInterface } from "node:readline";
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createAssistantMessageEventStream } from "@mariozechner/pi-ai";
 import type { StreamFn } from "@mariozechner/pi-agent-core";
+import { ConsoleInputChannel } from "./console-channel.js";
 
 const PROVIDER_ID = "humanclaw";
 const MODEL_ID = "manual";
-const SENTINEL = "<<<END>>>";
 
 function estimateTokens(text: string): number {
   // Very rough heuristic: ~4 chars/token for English.
@@ -65,60 +64,14 @@ function buildManualPrompt(context: { systemPrompt?: string; messages?: unknown[
   return lines.join("\n\n").trim();
 }
 
-async function readManualResponse(abortSignal?: AbortSignal): Promise<string> {
-  if (!process.stdin.isTTY) {
-    throw new Error("HumanClaw requires an interactive terminal for manual input.");
-  }
-
-  const rl = createInterface({ input: process.stdin, output: process.stdout });
-  const lines: string[] = [];
-
-  let aborted = false;
-  const onAbort = () => {
-    aborted = true;
-    rl.close();
-  };
-  abortSignal?.addEventListener?.("abort", onAbort);
-
-  return await new Promise((resolve, reject) => {
-    rl.on("line", (line) => {
-      if (line.trim() === SENTINEL) {
-        rl.close();
-        return;
-      }
-      lines.push(line);
-    });
-
-    rl.on("close", () => {
-      abortSignal?.removeEventListener?.("abort", onAbort);
-      if (aborted) {
-        reject(new Error("HumanClaw input aborted."));
-        return;
-      }
-      resolve(lines.join("\n").trim());
-    });
-  });
-}
-
-function createManualStreamFn(): StreamFn {
+function createManualStreamFn(channel: ConsoleInputChannel): StreamFn {
   return (model, context, options) => {
     const stream = createAssistantMessageEventStream();
 
     const run = async () => {
       try {
         const promptText = buildManualPrompt(context ?? {});
-        const header =
-          "\n=====HumanClaw Manual Mode, Prompt: =====\n";
-
-        process.stdout.write(header);
-        if (promptText.length > 0) {
-          process.stdout.write(promptText + "\n");
-        } else {
-          process.stdout.write("(empty prompt)\n");
-        }
-        process.stdout.write("=====Please type or paste response here, end with <<<END>>> on a new seperated line to end the response.  Waiting...\n");
-
-        const responseText = await readManualResponse(options?.signal);
+        const responseText = await channel.getResponse(promptText, options?.signal);
         const inputTokens = estimateTokens(promptText);
         const outputTokens = estimateTokens(responseText);
 
@@ -202,7 +155,10 @@ export default definePluginEntry({
           },
         }),
       },
-      wrapStreamFn: () => createManualStreamFn(),
+      wrapStreamFn: () => {
+        const channel = new ConsoleInputChannel();
+        return createManualStreamFn(channel);
+      },
     });
   },
 });
