@@ -1,7 +1,9 @@
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createAssistantMessageEventStream } from "@mariozechner/pi-ai";
 import type { StreamFn } from "@mariozechner/pi-agent-core";
+import type { InputChannel } from "./types.js";
 import { ConsoleInputChannel } from "./console-channel.js";
+import { ComposedInputChannel } from "./composed-channel.js";
 
 const PROVIDER_ID = "humanclaw";
 const MODEL_ID = "manual";
@@ -64,7 +66,7 @@ function buildManualPrompt(context: { systemPrompt?: string; messages?: unknown[
   return lines.join("\n\n").trim();
 }
 
-function createManualStreamFn(channel: ConsoleInputChannel): StreamFn {
+function createManualStreamFn(channel: InputChannel): StreamFn {
   return (model, context, options) => {
     const stream = createAssistantMessageEventStream();
 
@@ -156,8 +158,9 @@ export default definePluginEntry({
         }),
       },
       wrapStreamFn: () => {
-        const channel = new ConsoleInputChannel();
-        return createManualStreamFn(channel);
+        const consoleChannel = new ConsoleInputChannel();
+        const composedChannel = new ComposedInputChannel([consoleChannel]);
+        return createManualStreamFn(composedChannel);
       },
     });
   },
