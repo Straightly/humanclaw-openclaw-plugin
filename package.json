@@ -1,0 +1,50 @@
+{
+  "name": "humanclaw-plugin",
+  "version": "0.1.0",
+  "description": "Human-in-the-loop manual provider for OpenClaw",
+  "type": "module",
+  "private": false,
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src/",
+    "openclaw.plugin.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "human-in-the-loop",
+    "manual",
+    "llm",
+    "agent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Straightly/humanclaw-openclaw-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Straightly/humanclaw-openclaw-plugin/issues"
+  },
+  "homepage": "https://github.com/Straightly/humanclaw-openclaw-plugin#readme",
+  "openclaw": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "dependencies": {
+    "@mariozechner/pi-ai": "0.61.1",
+    "@mariozechner/pi-agent-core": "0.61.1"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.3.0"
+  }
+}
