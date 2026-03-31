@@ -1,5 +1,5 @@
 {
-  "id": "humanclaw",
+  "id": "humanclaw-plugin",
   "name": "HumanClaw",
   "description": "Human-in-the-loop manual provider for OpenClaw",
   "configSchema": {

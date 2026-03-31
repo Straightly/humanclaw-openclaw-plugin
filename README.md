@@ -64,7 +64,7 @@ Run these commands in your terminal:
 
 ```bash
 openclaw plugins install humanclaw-plugin
-openclaw plugins enable humanclaw
+openclaw plugins enable humanclaw-plugin
 openclaw gateway restart
 ```
 
