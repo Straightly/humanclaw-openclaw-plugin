@@ -42,18 +42,18 @@ openclaw gateway restart
 └─────────────┘     └─────────────┘     └─────────────────┘
                                                │
                                                ▼
-                                        ┌─────────────────┐
-                                        │ Copy prompt to  │
-                                        │ free chatbot    │
-                                        │ (ChatGPT, etc)  │
-                                        └─────────────────┘
+                                        ┌───────────────────┐
+                                        │ Copy prompt to    │
+                                        │ free chatbot      │
+                                        │ (ChatGPT, etc)    │
+                                        └───────────────────┘
                                                │
                                                ▼
-                                        ┌─────────────────┐
-                                        │ Paste response  │
-                                        │ back to gateway │
-                                        │ + type END      │
-                                        └─────────────────┘
+                                        ┌───────────────────┐
+                                        │ Paste response    │
+                                        │ back to gateway   │
+                                        │ + type <<<END>>>  │
+                                        └───────────────────┘
 ```
 
 ## Detailed Steps
