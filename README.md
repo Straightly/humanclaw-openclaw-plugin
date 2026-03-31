@@ -16,9 +16,16 @@ HumanClaw is an OpenClaw provider plugin that inserts a **human-in-the-loop** st
 4. Paste the chatbot response back into the terminal.
 5. End with the sentinel `<<<END>>>` on its own line to continue.
 
-## Install (Local Dev)
-From your plugin repo:
+## Install
 
+### From npm (recommended)
+```bash
+openclaw plugins install humanclaw-plugin
+openclaw plugins enable humanclaw
+openclaw gateway restart
+```
+
+### From local source (development)
 ```bash
 # Replace with your actual path
 openclaw plugins install -l /path/to/humanclaw-openclaw-plugin
@@ -27,7 +34,32 @@ openclaw gateway restart
 ```
 
 ## Usage
-Once the plugin is enabled, pick the model `humanclaw/manual` (or the UI label **HumanClaw (manual)**) and run any normal OpenClaw workflow. When the prompt appears, paste back your response and end with `<<<END>>>`.
+
+Once installed and enabled:
+
+1. Select `humanclaw/manual` as your model in OpenClaw (in TUI or config)
+
+2. In the **gateway terminal** (where you ran `openclaw gateway run`), you'll see:
+   ```
+   =====HumanClaw Manual Mode, Prompt: =====
+   [The full prompt text from OpenClaw appears here]
+   
+   =====Please type or paste response here, end with <<<END>>> on a new line...
+   ```
+
+3. **Copy the prompt text** displayed above, paste it into any chatbot (ChatGPT, Claude, Gemini, etc.)
+
+4. **Copy the chatbot's response**
+
+5. **Return to the gateway terminal**, paste the response below the line, then type `<<<END>>>` on its own line and press Enter:
+   ```
+   [Your pasted response here]
+   <<<END>>>
+   ```
+
+6. OpenClaw continues the workflow with your response
+
+**Tip:** If the prompt is long, scroll up in the gateway terminal to see the full text.
 
 ## Configuration
 
