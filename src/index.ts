@@ -88,11 +88,14 @@ function createManualStreamFn(channel: InputChannel): StreamFn {
           timestamp: Date.now(),
         };
 
+        const DEBUG = process.env.HUMANCLAW_DEBUG === "true";
+        if (DEBUG) console.log(`[HumanClaw] About to push to stream, response length: ${responseText.length}`);
         stream.push({
           type: "done",
           reason: "stop",
           message: assistantMessage,
         });
+        if (DEBUG) console.log(`[HumanClaw] Stream push completed`);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : String(err);
         const errorMessageBlock = {
