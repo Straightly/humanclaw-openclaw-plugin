@@ -38,7 +38,11 @@
   "openclaw": {
     "extensions": [
       "./src/index.ts"
-    ]
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.0",
+      "minGatewayVersion": ">=2026.3.0"
+    }
   },
   "dependencies": {
     "@mariozechner/pi-ai": "0.61.1",
