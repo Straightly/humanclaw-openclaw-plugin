@@ -25,7 +25,7 @@ export class ConsoleInputChannel implements InputChannel {
     const deadline = new Date(Date.now() + 120000);
     const timeStr = deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     
-    process.stdout.write(`=====Please type or paste response here, end with <<<END>>> on a new line. Waiting until ${timeStr}...\n`);
+    process.stdout.write(`=====Please type or paste response here, end with <<<END>>> on a new line. (Scroll up to see full prompt above) Waiting until ${timeStr}...\n`);
 
     return this.readManualResponse(abortSignal);
   }
