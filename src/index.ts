@@ -3,7 +3,6 @@ import { createAssistantMessageEventStream } from "@mariozechner/pi-ai";
 import type { StreamFn } from "@mariozechner/pi-agent-core";
 import type { InputChannel } from "./types.js";
 import { ConsoleInputChannel } from "./console-channel.js";
-import { ComposedInputChannel } from "./composed-channel.js";
 
 const PROVIDER_ID = "humanclaw";
 const MODEL_ID = "manual";
@@ -162,8 +161,7 @@ export default definePluginEntry({
       },
       wrapStreamFn: () => {
         const consoleChannel = new ConsoleInputChannel();
-        const composedChannel = new ComposedInputChannel([consoleChannel]);
-        return createManualStreamFn(composedChannel);
+        return createManualStreamFn(consoleChannel);
       },
     });
   },
